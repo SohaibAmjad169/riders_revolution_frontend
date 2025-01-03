@@ -1,0 +1,45 @@
+[{
+    "id": 1,
+    "name": "CG 125",
+    "make": "Honda",
+    "year": 2024,
+    "title": "4-Stroke OHV Air Cooled",
+    "price":234900,
+    "type": "New",
+    "image":"https://www.atlashonda.com.pk/wp-content/uploads/2016/02/01-cg125_red_0015_360.png"
+
+},
+{
+    "id": 2,
+    "name": "CG 125s Gold",
+    "make": "Honda",
+    "year": 2024,
+    "title": "4 Stroke 125cc OHV Air Cooled",
+    "price":292900,
+    "type": "New",
+    "image":"https://www.atlashonda.com.pk/wp-content/uploads/2024/01/01-cg125_gold_black__0015_360.png"
+
+},
+{
+    "id": 3,
+    "name": "Pridor",
+    "make": "Honda",
+    "year": 2024,
+    "title": "4-Stroke OHC Air-Cooled",
+    "price":208900,
+    "type": "New",
+    "image":"https://www.atlashonda.com.pk/wp-content/uploads/2024/03/red-prider.png"
+
+},
+{
+    "id": 4,
+    "name": "CB150F",
+    "make": "Honda",
+    "year": 2024,
+    "title": "4 Stroke SOHC  Air Cooled 150cc Engine with Balancer",
+    "price":493900,
+    "type": "New",
+    "image":"https://www.atlashonda.com.pk/wp-content/uploads/2023/06/CB150F-Black-800x800-1-new-1.jpg"
+
+}
+]
