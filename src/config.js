@@ -1,5 +1,5 @@
 const SDK = {
-    BASE_URL: "https://rider-rev-baclend.vercel.app/Api",
+    BASE_URL: "http://localhost:5000/Api",
   };
   
   export default SDK;

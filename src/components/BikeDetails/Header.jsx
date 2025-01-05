@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToggleFlag } from '../../../utils/Redux/Store/FlagSlice';
@@ -6,6 +6,7 @@ import { addBikeToCart } from '../../Functions/AddBikeToCart';
 import AuthModal from '../Pages/Login';
 import axios from 'axios';
 import SDK from '../../config';
+import { toast } from 'react-hot-toast';
 
 const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
   const User = useSelector((state) => state.Auth);
@@ -14,32 +15,7 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
   const CartFlag = useSelector((state) => state.Flag);
   const dispatch = useDispatch();
 
-  const [bids, setBids] = useState([
-    {
-      bikeId: '1',
-      userName: 'John Doe',
-      userEmail: 'john.doe@example.com',
-      bidAmount: 50000,
-    },
-    {
-      bikeId: '1',
-      userName: 'Jane Smith',
-      userEmail: 'jane.smith@example.com',
-      bidAmount: 55000,
-    },
-    {
-      bikeId: '1',
-      userName: 'Alex Johnson',
-      userEmail: 'alex.johnson@example.com',
-      bidAmount: 60000,
-    },
-    {
-      bikeId: '1',
-      userName: 'Emily Brown',
-      userEmail: 'emily.brown@example.com',
-      bidAmount: 62000,
-    },
-  ]);
+  const [bids, setBids] = useState([]);
 
   const increaseQuantity = () => setQuantity(quantity + 1);
   const decreaseQuantity = () => quantity > 1 && setQuantity(quantity - 1);
@@ -52,10 +28,35 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
     }
   };
 
-  // Create a Bid
+  const getTheBidsData = async () => {
+    try {
+      const data = await axios.get(`${SDK.BASE_URL}/Bid/GetAllBikeBids?bike_id=${_id}`);
+      setBids(data.data.bids || []);
+    } catch (error) {
+      console.error('Error fetching bids:', error);
+    }
+  };
+
+  useEffect(() => {
+    getTheBidsData();
+  }, []);
+
   const createBid = async () => {
     if (!bidAmount || isNaN(bidAmount) || bidAmount <= 0) {
-      alert('Please enter a valid bid amount');
+      toast.error('Please enter a valid bid amount');
+      return;
+    }
+
+    const bikePrice = parseFloat(price);
+    const minBid = bikePrice * 0.6;
+
+    if (bidAmount < minBid) {
+      toast.error('Price is too low!');
+      return;
+    }
+
+    if (bidAmount > bikePrice) {
+      toast.error('Add a valid price!.');
       return;
     }
 
@@ -64,24 +65,31 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
         bikeId: _id,
         userName: User.user.Name,
         userEmail: User.user.Email,
-        bidAmount: bidAmount,
+        bidAmount,
       });
 
       if (response.data.message === 'Bid created successfully.') {
-        alert('Your bid has been placed successfully!');
+        toast.success('Your bid has been placed successfully!');
         setBidAmount('');
+        setBids((prevBids) => [
+          ...prevBids,
+          {
+            userName: User.user.Name,
+            userEmail: User.user.Email,
+            bidAmount,
+          },
+        ]);
       } else {
-        alert('There was an issue placing your bid.');
+        toast.error('There was an issue placing your bid.');
       }
     } catch (error) {
       console.error('Error creating bid:', error);
-      alert('An error occurred while placing your bid. Please try again later.');
+      toast.error('An error occurred while placing your bid. Please try again later.');
     }
   };
 
   return (
     <div className={`p-6 ${flag ? 'grid grid-cols-1 md:grid-cols-12 gap-6' : 'flex justify-center items-center'}`}>
-      {/* First Card - Center if flag is false */}
       <div className={flag ? 'col-span-12 md:col-span-8' : 'w-[800px] '}>
         <div className="max-w-full bg-white rounded-lg shadow-lg overflow-hidden">
           <img src={image} alt={name} className="w-full h-64 object-contain" />
@@ -89,7 +97,7 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
             <div className="flex justify-between items-center">
               <h1 className="text-2xl font-bold">{name}</h1>
               <div>
-                <p className="text-lg font-semibold text-green-600">{price}</p>
+                <p className="text-lg font-semibold text-green-600">{price} PKR</p>
                 <p className="text-sm text-gray-600">⭐⭐⭐⭐⭐ ({rating} Rating)</p>
               </div>
             </div>
@@ -104,17 +112,11 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
                       >
                         Add to Cart
                       </button>
-                      <button
-                        className="bg-gray-200 px-4 py-2 ml-4"
-                        onClick={increaseQuantity}
-                      >
+                      <button className="bg-gray-200 px-4 py-2 ml-4" onClick={increaseQuantity}>
                         +
                       </button>
                       <span className="px-4 py-2">{quantity}</span>
-                      <button
-                        className="bg-gray-200 px-4 py-2"
-                        onClick={decreaseQuantity}
-                      >
+                      <button className="bg-gray-200 px-4 py-2" onClick={decreaseQuantity}>
                         -
                       </button>
                     </div>
@@ -144,41 +146,41 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
         </div>
       </div>
 
-      {/* List of Bids - Show only when flag is true */}
       {flag && (
         <div className="col-span-12 md:col-span-4">
           <div className="bg-white rounded-lg shadow-lg p-4">
             <h2 className="text-xl font-bold text-gray-800 mb-4">List of Bids</h2>
-            <ul className="space-y-4">
-              {bids.map((bid, index) => (
-                <li
-                  key={index}
-                  className="flex items-center bg-gray-100 rounded-lg p-4 shadow-sm hover:shadow-lg transition-shadow duration-200"
-                >
-                  <img
-                    src={image}
-                    alt="Bike"
-                    className="w-16 h-16 object-contain rounded-lg border border-gray-200"
-                  />
-                  <div className="ml-4 flex-1">
-                    <p className="text-lg font-semibold text-gray-800">
-                      {bid.userName}{' '}
-                      <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-1 rounded-lg">
-                        {bid.userEmail}
-                      </span>
-                    </p>
-                    <p className="text-gray-600 mt-1">
-                      <span className="font-bold text-green-600">Bid:</span> {bid.bidAmount} PKR
-                    </p>
-                  </div>
-                  <div>
-                    <span className="bg-green-200 text-green-800 text-sm font-medium px-3 py-1 rounded-lg">
-                      Active
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <div className="h-[400px] overflow-y-auto">
+              {bids.length > 0 ? (
+                <ul className="space-y-4">
+                  {bids.map((bid, index) => (
+                    <li
+                      key={index}
+                      className="flex items-center bg-gray-100 rounded-lg p-4 shadow-sm hover:shadow-lg transition-shadow duration-200"
+                    >
+                      <img
+                        src={image}
+                        alt="Bike"
+                        className="w-16 h-16 object-contain rounded-lg border border-gray-200"
+                      />
+                      <div className="ml-4 flex-1">
+                        <p className="text-lg font-semibold text-gray-800">
+                          Name : {bid.userName}{' '}
+                        </p>
+                        <p className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-1 rounded-lg">
+                          {bid.userEmail}
+                        </p>
+                        <p className="text-gray-600 mt-1">
+                          <span className="font-bold text-green-600">Bid:</span> {bid.bidAmount} PKR
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-600 text-center">No bids available</p>
+              )}
+            </div>
           </div>
         </div>
       )}

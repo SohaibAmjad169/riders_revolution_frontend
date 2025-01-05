@@ -1,50 +1,84 @@
-import React, { useState } from 'react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import React, { useState } from "react";
+import axios from "axios";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const UserSellBike = () => {
-  const [questions, setQuestions] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userName = user?.Name || "User";
+
+  const [questions, setQuestions] = useState([{ question: "", answer: "" }]);
 
   const formik = useFormik({
     initialValues: {
-      bikeName: '',
-      price: '',
-      rating: '',
-      engine: '',
-      condition: '',
-      running: '',
+      bikeName: "",
+      price: "",
+      rating: "",
+      engine: "",
+      condition: "",
       images: [],
     },
     validationSchema: Yup.object({
-      bikeName: Yup.string().required('Bike name is required'),
+      bikeName: Yup.string().required("Bike name is required"),
       price: Yup.number()
-        .typeError('Price must be a number')
-        .required('Price is required'),
+        .typeError("Price must be a number")
+        .required("Price is required"),
       rating: Yup.number()
-        .min(1, 'Rating must be between 1 and 5')
-        .max(5, 'Rating must be between 1 and 5')
-        .required('Rating is required'),
-      engine: Yup.string().required('Engine is required'),
-      condition: Yup.string().required('Condition is required'),
-      running: Yup.string().required('Running status is required'),
-      images: Yup.array().min(1, 'Please upload at least one image'),
+        .min(1, "Rating must be between 1 and 5")
+        .max(5, "Rating must be between 1 and 5")
+        .required("Rating is required"),
+      engine: Yup.string().required("Engine is required"),
+      condition: Yup.string().required("Condition is required"),
     }),
     onSubmit: (values) => {
-      const data = { ...values, questions };
-      console.log('Form Data:', data);
-      alert('Form submitted successfully');
+
+      const bikeData = {
+        name: values.bikeName,
+        price: values.price,
+        rating: values.rating,
+        engine: values.engine,
+        condition: values.condition,
+        userName,
+        imageUrl: values.images,
+        petrolCapacity: 13,
+        starting: "Electric/Kick Start",
+        transmission: "5-Speed",
+        groundClearance: 160,
+        displacement: 125,
+        compressionRatio: "10.0:1",
+        boreAndStroke: "54.0 x 54.0 mm",
+        tyreFront: "2.75 – 18",
+        tyreRear: "90/90 – 18",
+        seatHeight: 775,
+        length: 2005,
+        width: 760,
+        height: 1110,
+        weight: 130,
+      };
+     
+      const dataToSend = {
+        bikeData: bikeData,
+        images: values.images.map((file) => ({
+          fileName: file.name,
+          fileData: file,
+        })),
+      };
+
+      console.log(dataToSend);
+      console.log(bikeData);
+    
     },
   });
 
   // Handle file upload
   const handleImageUpload = (event) => {
-    const files = Array.from(event.target.files);
-    formik.setFieldValue('images', files);
+    const files = Array.from(event.target.files); 
+    formik.setFieldValue("imageUrl", files); 
   };
 
-  // Add a new question and answer input
+  // Add a new question
   const addQuestion = () => {
-    setQuestions([...questions, { question: '', answer: '' }]);
+    setQuestions([...questions, { question: "", answer: "" }]);
   };
 
   // Update question or answer value
@@ -67,11 +101,7 @@ const UserSellBike = () => {
             type="text"
             name="bikeName"
             placeholder="Enter bike name"
-            className={`w-full px-4 py-2 border focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-gray-800 shadow-sm ${
-              formik.errors.bikeName && formik.touched.bikeName
-                ? 'border-red-500'
-                : 'border-gray-300'
-            }`}
+            className={`w-full px-4 py-2 border ${formik.errors.bikeName && formik.touched.bikeName ? "border-red-500" : "border-gray-300"} rounded-md text-gray-800`}
             value={formik.values.bikeName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -88,11 +118,7 @@ const UserSellBike = () => {
             type="number"
             name="price"
             placeholder="Enter price"
-            className={`w-full px-4 py-2 border focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-gray-800 shadow-sm ${
-              formik.errors.price && formik.touched.price
-                ? 'border-red-500'
-                : 'border-gray-300'
-            }`}
+            className={`w-full px-4 py-2 border ${formik.errors.price && formik.touched.price ? "border-red-500" : "border-gray-300"} rounded-md text-gray-800`}
             value={formik.values.price}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -108,12 +134,10 @@ const UserSellBike = () => {
           <input
             type="number"
             name="rating"
+            min="1"
+            max="5"
             placeholder="Enter rating (1-5)"
-            className={`w-full px-4 py-2 border focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-gray-800 shadow-sm ${
-              formik.errors.rating && formik.touched.rating
-                ? 'border-red-500'
-                : 'border-gray-300'
-            }`}
+            className={`w-full px-4 py-2 border ${formik.errors.rating && formik.touched.rating ? "border-red-500" : "border-gray-300"} rounded-md text-gray-800`}
             value={formik.values.rating}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -129,12 +153,8 @@ const UserSellBike = () => {
           <input
             type="text"
             name="engine"
-            placeholder="Enter engine details"
-            className={`w-full px-4 py-2 border focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-gray-800 shadow-sm ${
-              formik.errors.engine && formik.touched.engine
-                ? 'border-red-500'
-                : 'border-gray-300'
-            }`}
+            placeholder="Enter engine type"
+            className={`w-full px-4 py-2 border ${formik.errors.engine && formik.touched.engine ? "border-red-500" : "border-gray-300"} rounded-md text-gray-800`}
             value={formik.values.engine}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -149,42 +169,17 @@ const UserSellBike = () => {
           <label className="block text-gray-700 font-medium">Condition</label>
           <select
             name="condition"
-            className={`w-full px-4 py-2 border focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-gray-800 shadow-sm ${
-              formik.errors.condition && formik.touched.condition
-                ? 'border-red-500'
-                : 'border-gray-300'
-            }`}
+            className={`w-full px-4 py-2 border ${formik.errors.condition && formik.touched.condition ? "border-red-500" : "border-gray-300"} rounded-md text-gray-800`}
             value={formik.values.condition}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           >
-            <option value="">Select Condition</option>
+            <option value="">Select condition</option>
             <option value="New">New</option>
             <option value="Old">Old</option>
           </select>
           {formik.errors.condition && formik.touched.condition && (
             <p className="text-red-500 text-sm mt-1">{formik.errors.condition}</p>
-          )}
-        </div>
-
-        {/* Running */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium">Running (KM)</label>
-          <input
-            type="text"
-            name="running"
-            placeholder="Enter running in KM"
-            className={`w-full px-4 py-2 border focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-gray-800 shadow-sm ${
-              formik.errors.running && formik.touched.running
-                ? 'border-red-500'
-                : 'border-gray-300'
-            }`}
-            value={formik.values.running}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.errors.running && formik.touched.running && (
-            <p className="text-red-500 text-sm mt-1">{formik.errors.running}</p>
           )}
         </div>
 
@@ -195,47 +190,37 @@ const UserSellBike = () => {
             type="file"
             name="images"
             multiple
-            accept="image/*"
-            className="w-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-gray-800 shadow-sm"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-800"
             onChange={handleImageUpload}
           />
           {formik.errors.images && formik.touched.images && (
             <p className="text-red-500 text-sm mt-1">{formik.errors.images}</p>
           )}
-          <div className="grid grid-cols-3 gap-4 mt-4">
-            {formik.values.images &&
-              formik.values.images.map((file, index) => (
-                <img
-                  key={index}
-                  src={URL.createObjectURL(file)}
-                  alt={`Preview ${index}`}
-                  className="w-full h-32 object-cover rounded-md shadow-md"
-                />
-              ))}
-          </div>
         </div>
 
-        {/* Questions */}
+        {/* Questions Section */}
         <div className="mb-6">
-          <label className="block text-gray-700 font-medium">Questions & Answers</label>
+          <label className="block text-gray-700 font-medium">
+            Questions & Answers
+          </label>
           {questions.map((q, index) => (
             <div key={index} className="mb-4 flex gap-4">
               <input
                 type="text"
                 placeholder="Question"
-                className="w-1/2 px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-gray-800 shadow-sm"
+                className="w-1/2 px-4 py-2 border border-gray-300 rounded-md"
                 value={q.question}
                 onChange={(e) =>
-                  handleQuestionChange(index, 'question', e.target.value)
+                  handleQuestionChange(index, "question", e.target.value)
                 }
               />
               <input
                 type="text"
                 placeholder="Answer"
-                className="w-1/2 px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-gray-800 shadow-sm"
+                className="w-1/2 px-4 py-2 border border-gray-300 rounded-md"
                 value={q.answer}
                 onChange={(e) =>
-                  handleQuestionChange(index, 'answer', e.target.value)
+                  handleQuestionChange(index, "answer", e.target.value)
                 }
               />
             </div>
@@ -243,16 +228,15 @@ const UserSellBike = () => {
           <button
             type="button"
             onClick={addQuestion}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md mt-2"
           >
-            Add Question
+            Add Another Question
           </button>
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full px-4 py-2 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+          className="w-full px-4 py-2 bg-blue-500 text-white font-bold rounded-md"
         >
           Submit
         </button>

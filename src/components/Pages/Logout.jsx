@@ -42,7 +42,7 @@ function Logout() {
   }, []);
 
   return (
-    <div className="relative mt-1">
+    <div className="relative mt-1 me-4">
       {/* User Icon */}
       <div
         ref={userIconRef}

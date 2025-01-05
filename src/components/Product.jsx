@@ -10,7 +10,7 @@ const BikeDetailsPage = () => {
   const [Bike, SetBike] = useState(null) 
   const [Loading, SetLoading] = useState(true)
   const [Error, SetError] = useState(false) 
-
+  
   const SingleBike = async () => {
     const BikeData = await GetSingleBike(id)
     if (BikeData) {
