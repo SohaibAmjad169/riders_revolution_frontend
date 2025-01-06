@@ -8,11 +8,11 @@ const Assembly = ({ AssemblyDetails }) => {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {Object.entries({
-          'Compression Ratio': AssemblyDetails.CompressionRatio,
-          'Bore and Stroke': AssemblyDetails.BoreandStroke,
-          'Tyre (Front)': AssemblyDetails.TyreFront,
-          'Tyre (Rear)': AssemblyDetails.TyreRear,
-          'Seat Height': `${AssemblyDetails.SeatHeight} mm`,
+          'Compression Ratio': AssemblyDetails.compressionRatio,
+          'Bore and Stroke': AssemblyDetails.boreAndStroke,
+          'Tyre (Front)': AssemblyDetails.tyreFront,
+          'Tyre (Rear)': AssemblyDetails.tyreRear,
+          'Seat Height': `${AssemblyDetails.seatHeight} mm`,
         }).map(([label, value]) => (
           <div
             key={label}

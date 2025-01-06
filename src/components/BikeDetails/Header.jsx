@@ -7,6 +7,7 @@ import AuthModal from '../Pages/Login';
 import axios from 'axios';
 import SDK from '../../config';
 import { toast } from 'react-hot-toast';
+import { FaRegHeart, FaHeart } from 'react-icons/fa';
 
 const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
   const User = useSelector((state) => state.Auth);
@@ -16,6 +17,7 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
   const dispatch = useDispatch();
 
   const [bids, setBids] = useState([]);
+  const [isWishlisted, setIsWishlisted] = useState(false);
 
   const increaseQuantity = () => setQuantity(quantity + 1);
   const decreaseQuantity = () => quantity > 1 && setQuantity(quantity - 1);
@@ -88,11 +90,35 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
     }
   };
 
+  const toggleWishlist = async () => {
+    // Toggle wishlist state locally
+    setIsWishlisted(!isWishlisted);
+  
+    try {
+      const response = await axios.post(`${SDK.BASE_URL}/Wishlist/createWishlist`, {
+        bikeId: _id,
+        userName: User.user.Name,
+        userEmail: User.user.Email,
+        bikeImage: image,
+      });
+  
+      if (response.data.message === 'Wishlist updated successfully.') {
+        toast.success(isWishlisted ? 'Bike removed from wishlist' : 'Bike added to wishlist');
+      } else {
+        toast.error('There was an issue updating the wishlist');
+      }
+    } catch (error) {
+      console.error('Error updating wishlist:', error);
+      toast.error('An error occurred while updating your wishlist. Please try again.');
+    }
+  };
+  
+
   return (
     <div className={`p-6 ${flag ? 'grid grid-cols-1 md:grid-cols-12 gap-6' : 'flex justify-center items-center'}`}>
       <div className={flag ? 'col-span-12 md:col-span-8' : 'w-[800px] '}>
         <div className="max-w-full bg-white rounded-lg shadow-lg overflow-hidden">
-          <img src={image} alt={name} className="w-full h-64 object-contain" />
+          <img src={`${SDK.IMAGES_URL}/${image}`} alt={name} className="w-full h-64 object-contain" />
           <div className="p-6">
             <div className="flex justify-between items-center">
               <h1 className="text-2xl font-bold">{name}</h1>
@@ -105,23 +131,40 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
               <div className="flex items-center space-x-4">
                 {User.user ? (
                   !flag ? (
-                    <div className="flex items-center">
-                      <button
-                        className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200"
-                        onClick={AddToCart}
-                      >
-                        Add to Cart
-                      </button>
-                      <button className="bg-gray-200 px-4 py-2 ml-4" onClick={increaseQuantity}>
-                        +
-                      </button>
-                      <span className="px-4 py-2">{quantity}</span>
-                      <button className="bg-gray-200 px-4 py-2" onClick={decreaseQuantity}>
-                        -
-                      </button>
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center">
+                        <button
+                          className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200"
+                          onClick={AddToCart}
+                        >
+                          Add to Cart
+                        </button>
+                        <button
+                          className="bg-gray-200 px-4 py-2 ml-4"
+                          onClick={increaseQuantity}
+                        >
+                          +
+                        </button>
+                        <span className="px-4 py-2">{quantity}</span>
+                        <button
+                          className="bg-gray-200 px-4 py-2"
+                          onClick={decreaseQuantity}
+                        >
+                          -
+                        </button>
+                      </div>
+                      <div className="ml-auto flex items-center">
+                        <button onClick={toggleWishlist}>
+                          {isWishlisted ? (
+                            <FaHeart className="text-red-500 text-2xl" />
+                          ) : (
+                            <FaRegHeart className="text-gray-500 text-2xl" />
+                          )}
+                        </button>
+                      </div>
                     </div>
                   ) : (
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 w-full">
                       <input
                         type="number"
                         className="rounded-lg bg-white text-black p-2 border-2 border-gray-400"
@@ -135,6 +178,15 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
                       >
                         Place Bid
                       </button>
+                      <div className="ml-auto flex items-center">
+                        <button onClick={toggleWishlist}>
+                          {isWishlisted ? (
+                            <FaHeart className="text-red-500 text-2xl" />
+                          ) : (
+                            <FaRegHeart className="text-gray-500 text-2xl" />
+                          )}
+                        </button>
+                      </div>
                     </div>
                   )
                 ) : (
@@ -159,7 +211,7 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
                       className="flex items-center bg-gray-100 rounded-lg p-4 shadow-sm hover:shadow-lg transition-shadow duration-200"
                     >
                       <img
-                        src={image}
+                        src={`${SDK.IMAGES_URL}/${image}`}
                         alt="Bike"
                         className="w-16 h-16 object-contain rounded-lg border border-gray-200"
                       />

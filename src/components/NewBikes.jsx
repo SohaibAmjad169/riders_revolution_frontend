@@ -4,6 +4,7 @@ import 'slick-carousel/slick/slick-theme.css'
 import Slider from 'react-slick'
 import { FetchBikes } from '../Functions/GetAllBikes'
 import { useNavigate } from 'react-router-dom'
+import SDK from '../config'
 
 function NewBikes() {
   const navigate = useNavigate()
@@ -71,7 +72,7 @@ function NewBikes() {
               className="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
             >
               <img
-                src={bike.imageUrl}
+              src={`${SDK.IMAGES_URL}/${bike.image}`}
                 alt={bike.name}
                 className="w-full h-56 object-contain rounded-md mb-4"
               />

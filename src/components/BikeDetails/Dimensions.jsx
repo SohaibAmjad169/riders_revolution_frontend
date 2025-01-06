@@ -8,10 +8,10 @@ const Dimensions = ({ DimensionsDetails }) => {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {Object.entries({
-          Length: `${DimensionsDetails.Length} mm`,
-          Width: `${DimensionsDetails.Width} mm`,
-          Height: `${DimensionsDetails.Height} mm`,
-          Weight: `${DimensionsDetails.Weight} kg`,
+          Length: `${DimensionsDetails.length} mm`,
+          Width: `${DimensionsDetails.width} mm`,
+          Height: `${DimensionsDetails.height} mm`,
+          Weight: `${DimensionsDetails.weight} kg`,
         }).map(([label, value]) => (
           <div
             key={label}

@@ -21,7 +21,7 @@ const BikeData = ({ bikeData }) => {
           <PiEngineFill className="text-3xl text-blue-500" />
           <div>
             <h3 className="text-sm font-medium text-gray-700">Engine</h3>
-            <span className="text-gray-600">{bikeData.Engine}</span>
+            <span className="text-gray-600">{bikeData.engine}</span>
           </div>
         </div>
 
@@ -33,7 +33,7 @@ const BikeData = ({ bikeData }) => {
               Petrol Capacity
             </h3>
             <span className="text-gray-600">
-              {bikeData.PetrolCapacity} liters
+              {bikeData.petrolCapacity} liters
             </span>
           </div>
         </div>
@@ -43,7 +43,7 @@ const BikeData = ({ bikeData }) => {
           <ImPowerCord className="text-3xl text-purple-500" />
           <div>
             <h3 className="text-sm font-medium text-gray-700">Starting</h3>
-            <span className="text-gray-600">{bikeData.Starting}</span>
+            <span className="text-gray-600">{bikeData.starting}</span>
           </div>
         </div>
 
@@ -52,7 +52,7 @@ const BikeData = ({ bikeData }) => {
           <IoSpeedometerSharp className="text-3xl text-red-500" />
           <div>
             <h3 className="text-sm font-medium text-gray-700">Transmission</h3>
-            <span className="text-gray-600">{bikeData.Transmission}</span>
+            <span className="text-gray-600">{bikeData.transmission}</span>
           </div>
         </div>
       </div>

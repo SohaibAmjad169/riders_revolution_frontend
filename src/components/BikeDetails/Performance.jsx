@@ -8,9 +8,9 @@ const Performance = ({ PerformanceDetails }) => {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {Object.entries({
-          Displacement: `${PerformanceDetails.Displacement} cc`,
-          'Ground Clearance': `${PerformanceDetails.GroundClearance} mm`,
-          'Top Speed': `${PerformanceDetails.TopSpeed || 'N/A'} km/h`,
+          Displacement: `${PerformanceDetails.displacement} cc`,
+          'Ground Clearance': `${PerformanceDetails.groundClearance} mm`,
+          'Top Speed': `${PerformanceDetails.topSpeed || 'N/A'} km/h`,
         }).map(([label, value]) => (
           <div
             key={label}
@@ -27,9 +27,9 @@ const Performance = ({ PerformanceDetails }) => {
 
 Performance.propTypes = {
   PerformanceDetails: PropTypes.shape({
-    Displacement: PropTypes.number.isRequired,
-    GroundClearance: PropTypes.number.isRequired,
-    TopSpeed: PropTypes.number, // Optional, as it may not always be available
+    displacement: PropTypes.number.isRequired,
+    groundClearance: PropTypes.number.isRequired,
+    topSpeed: PropTypes.number, // Optional, as it may not always be available
   }).isRequired,
 }
 

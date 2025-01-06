@@ -35,7 +35,7 @@ const BikeDetailsPage = () => {
           <BikeHeader
             flag={Bike.Used}
             _id={Bike._id}
-            image={Bike.imageUrl}
+            image={Bike.image}
             name={Bike.name}
             price={Bike.price}
             rating={Bike.rating}

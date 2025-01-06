@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { FetchBikes } from '../Functions/GetAllBikes'
 import Spinner from './loader/Spinner'
+import SDK from '../config'
 
 const FeaturedBikes = () => {
   const navigate = useNavigate()
@@ -37,7 +38,7 @@ const FeaturedBikes = () => {
               className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300 cursor-pointer"
             >
               <img
-                src={bike.imageUrl}
+              src={`${SDK.IMAGES_URL}/${bike.image}`}
                 alt={bike.name}
                 className="w-full h-40 object-contain mb-4"
               />
