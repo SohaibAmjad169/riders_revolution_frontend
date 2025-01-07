@@ -88,6 +88,14 @@ function Logout() {
             </Link>
           </div>
           <hr />
+           <div className="flex items-center space-x-2 my-3">
+            <Link to="/wishlist">
+              <h1 className="font-medium text-gray-800 text-sm flex-grow">
+                Check Wishlist
+              </h1>
+            </Link>
+          </div>
+          <hr />
           {/* Logout Button */}
           <button
             className="w-full px-3 mt-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200 text-sm font-medium"

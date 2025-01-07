@@ -9,7 +9,7 @@ import SDK from '../../config';
 import { toast } from 'react-hot-toast';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
 
-const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
+const BikeHeader = ({ image, name, price, rating, _id, flag, bikeData }) => {
   const User = useSelector((state) => state.Auth);
   const [quantity, setQuantity] = useState(1);
   const [bidAmount, setBidAmount] = useState('');
@@ -91,18 +91,20 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
   };
 
   const toggleWishlist = async () => {
-    // Toggle wishlist state locally
     setIsWishlisted(!isWishlisted);
-  
+
     try {
       const response = await axios.post(`${SDK.BASE_URL}/Wishlist/createWishlist`, {
         bikeId: _id,
         userName: User.user.Name,
         userEmail: User.user.Email,
         bikeImage: image,
+        bikeName:bikeData.name,
+        bikePrice:bikeData.price,
+        bikeRating:bikeData.rating
       });
-  
-      if (response.data.message === 'Wishlist updated successfully.') {
+
+      if (response.data.message === 'wishlist created successfully.') {
         toast.success(isWishlisted ? 'Bike removed from wishlist' : 'Bike added to wishlist');
       } else {
         toast.error('There was an issue updating the wishlist');
@@ -112,7 +114,7 @@ const BikeHeader = ({ image, name, price, rating, _id, flag }) => {
       toast.error('An error occurred while updating your wishlist. Please try again.');
     }
   };
-  
+
 
   return (
     <div className={`p-6 ${flag ? 'grid grid-cols-1 md:grid-cols-12 gap-6' : 'flex justify-center items-center'}`}>

@@ -39,6 +39,7 @@ const BikeDetailsPage = () => {
             name={Bike.name}
             price={Bike.price}
             rating={Bike.rating}
+            bikeData={Bike} 
           />
           {/* Add additional details here */}
           <BikeData bikeData={Bike} />

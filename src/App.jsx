@@ -17,6 +17,7 @@ import ServicesPage from './components/Pages/Services'
 import Footer from './components/layout/Footer'
 import UserSellBike from './components/Pages/UserSellBike'
 import CheckUserAds from './components/Pages/CheckUserAds'
+import Wishlist from './components/Pages/Wishlist'
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/sell-your-bike" element={<UserSellBike />} />
             <Route path="/check-user-ads" element={<CheckUserAds />} />
+            <Route path="/wishlist" element={<Wishlist />} />
 
             {/* <Route path="/PostOrder" element={<PostOrder />} /> */}
             {/* Parameterized Route */}

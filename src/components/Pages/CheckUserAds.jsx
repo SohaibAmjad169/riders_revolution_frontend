@@ -103,9 +103,8 @@ const UpdateBikeModal = ({ isOpen, onClose, bike, onUpdate }) => {
             <button
               type="submit"
               disabled={loading}
-              className={`${
-                loading ? 'bg-gray-400' : 'bg-blue-500'
-              } px-4 py-2 text-white rounded-lg`}
+              className={`${loading ? 'bg-gray-400' : 'bg-blue-500'
+                } px-4 py-2 text-white rounded-lg`}
             >
               {loading ? 'Updating...' : 'Update'}
             </button>
@@ -171,6 +170,24 @@ const CheckUserAds = () => {
     }
   };
 
+  const handleStartSellTimer = async (bikeId) => {
+    try {
+      const response = await axios.put(`${SDK.BASE_URL}/Wishlist/startTimer?bikeId=${bikeId}`);
+  
+      if (response.data.success) {
+        alert("Timer started successfully!");
+        getUserBikes();  
+      } else {
+        alert("Failed to start timer!");
+      }
+    } catch (error) {
+      console.error("Error starting the timer:", error);
+      alert("An error occurred while starting the timer.");
+    }
+  };
+  
+
+
   return (
     <div className="mx-20 mx-auto mt-24 p-6 bg-white shadow-lg rounded-lg">
       <h1 className="text-2xl mb-10 font-bold text-center text-gray-800 mb-6">
@@ -213,6 +230,12 @@ const CheckUserAds = () => {
                   <FaTrash className="inline mr-1" /> Delete
                 </button>
               </div>
+              <button
+                className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200 mt-5"
+                onClick={() => handleStartSellTimer(bike._id)}
+              >
+                Start Sell Timer
+              </button>
             </div>
           ))}
         </div>
