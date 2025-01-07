@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import SDK from '../../config'
 
 const Cartitems = ({ item, isService = false }) => {
   return (
@@ -7,7 +8,7 @@ const Cartitems = ({ item, isService = false }) => {
       className="flex justify-between items-center p-4 border-b"
     >
       <img
-        src={isService ? item?.imageUrl : item?.bikeId?.imageUrl}
+        src={`${SDK.IMAGES_URL}/${item.imageUrl}`}
         alt={isService ? item?.name : item?.bikeId?.name}
         className="w-24 h-24 object-contain rounded"
       />

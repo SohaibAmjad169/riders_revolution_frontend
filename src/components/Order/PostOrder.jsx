@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchSingleOrder } from '../../Functions/GetOrder'
-import { emptyCart } from '../../Functions/EmptyCart' // Import the empty cart function
+import { emptyCart } from '../../Functions/EmptyCart' 
 import { useDispatch, useSelector } from 'react-redux'
 import { ToggleFlag } from '../../../utils/Redux/Store/FlagSlice'
+import SDK from '../../config'
 
 const Checkout = () => {
   const [orderData, setOrderData] = useState(null)
@@ -18,7 +19,6 @@ const Checkout = () => {
         setOrderData(data.Order)
         setCartData(data.Cart)
 
-        // Empty the cart after successfully fetching data
         await emptyCart(User.user._id)
       }
     } catch (error) {
@@ -43,7 +43,6 @@ const Checkout = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-4 mt-20">
-      {/* Order Summary */}
       <div className="bg-white shadow rounded-lg p-6 mb-6">
         <h2 className="text-xl font-bold text-gray-800 mb-4">Order Details</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -90,7 +89,7 @@ const Checkout = () => {
                 className="border border-black rounded-lg overflow-hidden shadow hover:shadow-md transition-shadow duration-200"
               >
                 <img
-                  src={bike.imageUrl}
+                src={`${SDK.IMAGES_URL}/${bike.imageUrl}`}
                   alt={bike.name}
                   className="w-full h-40 object-contain"
                 />

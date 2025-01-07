@@ -173,10 +173,10 @@ const CheckUserAds = () => {
   const handleStartSellTimer = async (bikeId) => {
     try {
       const response = await axios.put(`${SDK.BASE_URL}/Wishlist/startTimer?bikeId=${bikeId}`);
-  
+
       if (response.data.success) {
         alert("Timer started successfully!");
-        getUserBikes();  
+        getUserBikes();
       } else {
         alert("Failed to start timer!");
       }
@@ -185,7 +185,7 @@ const CheckUserAds = () => {
       alert("An error occurred while starting the timer.");
     }
   };
-  
+
 
 
   return (
