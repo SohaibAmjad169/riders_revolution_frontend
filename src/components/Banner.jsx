@@ -8,41 +8,57 @@ import { Link } from 'react-router-dom'
 function Banner() {
   useEffect(() => {
     AOS.init({
-      duration: 1000, // duration of the animation
-      easing: 'ease-in-out', // easing effect for smooth animation
-      once: true, // animation will only happen once
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
     })
   }, [])
+
+  useEffect(() => {
+    AOS.init({ duration: 1000 }); 
+  }, []);
 
   return (
     <>
       <div className="mt-20">
         <div
-          className="relative flex items-center h-screen bg-cover bg-center"
+          className="relative flex font-Poppins items-center h-screen bg-cover bg-center"
           style={{ backgroundImage: `url(${banner})` }}
           data-aos="fade-up"
         >
           {/* Black Overlay */}
           <div className="absolute inset-0 bg-black opacity-60"></div>
 
-          <div className="relative z-10 text-white text-right max-w-screen-2xl px-4 md:px-20 ml-auto">
-            <h1 className="text-xl md:text-5xl font-extrabold text-sky-500 font-myFont2">
+          {/* Hero Content */}
+          <div
+            className="relative z-10 font-Poppins text-white text-right max-w-screen-2xl px-4 md:px-20 ml-auto"
+            data-aos="fade-right"
+            data-aos-offset="200"
+            data-aos-easing="ease-in-out"
+          >
+            <h1 className="text-xl md:text-5xl font-extrabold text-sky-500">
               Welcome to
             </h1>
-            <p className="text-5xl font-extrabold md:text-9xl mt-4 font-myFont">
+            <p
+              className="text-5xl font-extrabold md:text-9xl mt-4"
+              data-aos="fade-left"
+            >
               Riders
               <br />
               Revolution
             </p>
             <a href="/bike">
-              <button className="btn btn-lg font-semibold relative bg-sky-500 text-white font-md py-2 px-10 mt-6 hover:bg-sky-600">
+              <button
+                className="btn btn-lg font-semibold relative bg-sky-500 text-white py-2 px-10 mt-6 hover:bg-sky-600"
+                data-aos="zoom-in"
+              >
                 <span className="relative z-10">Explore</span>
-                <div className="absolute inset-0 flex items-center justify-center"></div>
               </button>
             </a>
           </div>
         </div>
       </div>
+      );
 
       <div data-aos="fade-up" data-aos-delay="200">
         <h2 className="text-4xl font-bold text-grey-900 my-16 text-center">

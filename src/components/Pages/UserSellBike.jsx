@@ -66,17 +66,14 @@ const UserSellBike = () => {
           formData.append("image", values.image);
         }
 
-        // Send the form data
         const response = await axios.post(`${SDK.BASE_URL}/Bike/CreateUserBike`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
 
-        // Show success toast
         toast.success("Bike submitted successfully!");
 
-        // Clear the form after submission
         formik.resetForm();
-        setImagePreview(null); // Clear image preview
+        setImagePreview(null);
 
       } catch (error) {
         console.error("Error submitting bike:", error);
@@ -89,7 +86,6 @@ const UserSellBike = () => {
     const file = event.target.files[0];
     formik.setFieldValue("image", file);
 
-    // Set image preview
     const previewUrl = URL.createObjectURL(file);
     setImagePreview(previewUrl);
   };
