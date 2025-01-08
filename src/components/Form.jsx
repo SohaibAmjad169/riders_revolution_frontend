@@ -46,7 +46,7 @@ const Form = () => {
           <span className="absolute bottom-0 left-0 w-full h-2 bg-blue-400 -z-10"></span>
         </span>
       </h2>
-      <h2 className="text-3xl font-myFont2 text-grey-900 my-12 text-center">
+      <h2 className="text-3xl font-Poppins text-grey-900 my-12 text-center">
         Get in Touch
       </h2>
       <form onSubmit={formik.handleSubmit}>

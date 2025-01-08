@@ -61,9 +61,9 @@ function Banner() {
       );
 
       <div data-aos="fade-up" data-aos-delay="200">
-        <h2 className="text-4xl font-bold text-grey-900 my-16 text-center">
+        <h2 className="text-4xl font-Poppins font-bold text-grey-900 my-16 text-center">
           Why Choose
-          <span className="relative inline-block ml-2">
+          <span className="relative font-Poppins inline-block ml-2">
             Riders Revolution?
             <span className="absolute bottom-0 left-0 w-full h-2 bg-blue-400 -z-10"></span>
           </span>

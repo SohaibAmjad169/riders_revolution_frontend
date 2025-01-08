@@ -19,10 +19,8 @@ const FeatureCard = ({ number, title, description, delay }) => {
           {number}
         </div>
       </div>
-      <h3 className="text-3xl font-bold text-gray-900 mb-2 font-myFont2">
-        {title}
-      </h3>
-      <p className="text-gray-600 font-myFont2 text-lg">{description}</p>
+      <h3 className="text-3xl font-bold text-gray-900 mb-2">{title}</h3>
+      <p className="text-gray-600 text-lg">{description}</p>
     </div>
   )
 }
@@ -41,21 +39,21 @@ const FeaturesSection = () => {
       number: '1',
       title: 'DYNAMIC BIDDING SYSTEM',
       description:
-        'Buy And Sell Bikes And Parts Effortlessly With Real-Time Updates',
+        'Buy and sell bikes and parts effortlessly with real-time updates.',
       delay: '0', // No delay for the first card
     },
     {
       number: '2',
       title: 'TAILORED WORKSHOPS & EVENTS',
       description:
-        'Thrilling Races And Immersive Workshops For All Skill Levels',
+        'Thrilling races and immersive workshops for all skill levels.',
       delay: '500', // Delay for the second card (500ms after the first)
     },
     {
       number: '3',
       title: 'EXPERT MAINTENANCE & CUSTOMIZATION',
       description:
-        'Certified Mechanics And Professional Customization Services',
+        'Certified mechanics and professional customization services.',
       delay: '1000', // Delay for the third card (1000ms after the second)
     },
   ]

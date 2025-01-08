@@ -170,11 +170,15 @@ const CheckUserAds = () => {
     }
   };
 
-  const handleStartSellTimer = async (bikeId) => {
+  const handleStartSellTimer = async (bikeId, bikeName) => {
     try {
       const response = await axios.put(`${SDK.BASE_URL}/Wishlist/startTimer?bikeId=${bikeId}`);
 
       if (response.data.success) {
+        await axios.post(`${SDK.BASE_URL}/Wishlist/notifications/send`, {
+          bikeId: bikeId,
+          message: `The sell timer for your bike "${bikeName}" has started.`,
+        });
         alert("Timer started successfully!");
         getUserBikes();
       } else {
@@ -232,7 +236,7 @@ const CheckUserAds = () => {
               </div>
               <button
                 className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200 mt-5"
-                onClick={() => handleStartSellTimer(bike._id)}
+                onClick={() => handleStartSellTimer(bike._id, bike.name)}
               >
                 Start Sell Timer
               </button>
