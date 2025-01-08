@@ -19,7 +19,7 @@ import Footer from './components/layout/Footer';
 import UserSellBike from './components/Pages/UserSellBike';
 import CheckUserAds from './components/Pages/CheckUserAds';
 import Wishlist from './components/Pages/Wishlist';
-import { NotificationProvider, useNotifications } from './NotificationContext'; // Import NotificationProvider
+import { NotificationProvider, useNotifications } from './NotificationContext';
 import NotificationModal from './components/layout/Notification';
 
 function App() {

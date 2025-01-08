@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import axios from 'axios';
 import SDK from '../../config';
@@ -6,7 +6,6 @@ import Spinner from '../loader/Spinner';
 
 // Modal component to handle bike updates
 const UpdateBikeModal = ({ isOpen, onClose, bike, onUpdate }) => {
-  // Initialize updatedBike state only when the bike prop is provided.
   const [updatedBike, setUpdatedBike] = useState({
     name: bike?.name || '',
     price: bike?.price || '',
@@ -15,7 +14,6 @@ const UpdateBikeModal = ({ isOpen, onClose, bike, onUpdate }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Ensure that the state updates when the bike changes (e.g., when a bike is selected for editing).
   useEffect(() => {
     if (bike) {
       setUpdatedBike({
@@ -43,8 +41,8 @@ const UpdateBikeModal = ({ isOpen, onClose, bike, onUpdate }) => {
         ID: bike._id,
         bikeData: updatedBike,
       });
-      onUpdate(response.data.bike); // Pass updated bike data back to the parent
-      onClose(); // Close the modal
+      onUpdate(response.data.bike);
+      onClose();
     } catch (err) {
       setError(err.response?.data?.error || "Failed to update the bike.");
     } finally {
@@ -52,7 +50,7 @@ const UpdateBikeModal = ({ isOpen, onClose, bike, onUpdate }) => {
     }
   };
 
-  if (!isOpen || !bike) return null; // Don't render if modal is closed or bike is null
+  if (!isOpen || !bike) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -122,17 +120,34 @@ const CheckUserAds = () => {
   const [selectedBike, setSelectedBike] = useState(null);
   const user = JSON.parse(localStorage.getItem("user"));
   const userName = user?.Name || "User";
+  const [bids, setBids] = useState([]);
 
   const getUserBikes = async () => {
     setLoading(true);
     try {
       const response = await axios.get(`${SDK.BASE_URL}/Bike/GetUserBikes/${userName}`);
-      console.log(response.data);
       setData(response.data.data);
+      await getBidsFunction(response.data.data);
     } catch (error) {
       console.error('Error fetching user bikes:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const getBidsFunction = async (data) => {
+    const bikeIds = data.map((bike) => bike._id);
+
+    try {
+      const data = await axios.get(`${SDK.BASE_URL}/Bid/GetAllBikeBids?bike_id=${bikeIds}`);
+      setBids(data.data.bids || []);
+      if (response.data.bids) {
+        console.log('Bids for bikes:', response.data.data);
+      } else {
+        console.log('No bids found');
+      }
+    } catch (error) {
+      console.error('Error fetching bids:', error);
     }
   };
 
@@ -200,49 +215,84 @@ const CheckUserAds = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {data.map((bike) => (
-            <div
-              key={bike._id}
-              className="bg-gray-100 shadow-md rounded-lg p-4 flex flex-col justify-between"
-            >
-              <img
-                src={`${SDK.IMAGES_URL}/${bike.image}`}
-                alt={bike.name}
-                className="w-full h-32 object-cover rounded-lg mb-4"
-              />
-              <h2 className="text-lg font-semibold text-gray-800 mb-2">
-                {bike.name}
-              </h2>
-              <p className="text-gray-600 mb-1">
-                <span className="font-semibold">Price:</span> {bike.price}
-              </p>
-              <p className="text-gray-600 mb-1">
-                <span className="font-semibold">Condition:</span> {bike.Used ? "Used" : "New"}
-              </p>
-              <div className="flex justify-between items-center">
+        <Fragment>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {data.map((bike) => (
+              <div
+                key={bike._id}
+                className="bg-gray-100 shadow-md rounded-lg p-4 flex flex-col justify-between"
+              >
+                <img
+                  src={`${SDK.IMAGES_URL}/${bike.image}`}
+                  alt={bike.name}
+                  className="w-full h-32 object-cover rounded-lg mb-4"
+                />
+                <h2 className="text-lg font-semibold text-gray-800 mb-2">
+                  {bike.name}
+                </h2>
+                <p className="text-gray-600 mb-1">
+                  <span className="font-semibold">Price:</span> {bike.price}
+                </p>
+                <p className="text-gray-600 mb-1">
+                  <span className="font-semibold">Condition:</span> {bike.Used ? "Used" : "New"}
+                </p>
+                <div className="flex justify-between items-center">
+                  <button
+                    className="text-blue-500 hover:text-blue-700"
+                    onClick={() => handleUpdate(bike)}
+                  >
+                    <FaEdit className="inline mr-1" /> Update
+                  </button>
+                  <button
+                    className="text-red-500 hover:text-red-700"
+                    onClick={() => handleDelete(bike._id)}
+                  >
+                    <FaTrash className="inline mr-1" /> Delete
+                  </button>
+                </div>
                 <button
-                  className="text-blue-500 hover:text-blue-700"
-                  onClick={() => handleUpdate(bike)}
+                  className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200 mt-5"
+                  onClick={() => handleStartSellTimer(bike._id, bike.name)}
                 >
-                  <FaEdit className="inline mr-1" /> Update
-                </button>
-                <button
-                  className="text-red-500 hover:text-red-700"
-                  onClick={() => handleDelete(bike._id)}
-                >
-                  <FaTrash className="inline mr-1" /> Delete
+                  Start Sell Timer
                 </button>
               </div>
-              <button
-                className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200 mt-5"
-                onClick={() => handleStartSellTimer(bike._id, bike.name)}
-              >
-                Start Sell Timer
-              </button>
+            ))}
+
+          </div>
+          <div className="col-span-4 mt-10">
+            <div className="bg-white rounded-lg shadow-lg p-4">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">List of Bids</h2>
+              <div className="h-[400px] overflow-y-auto">
+                {bids.length > 0 ? (
+                  <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {bids.map((bid, index) => (
+                      <li
+                        key={index}
+                        className="flex items-center bg-gray-100 rounded-lg p-4 shadow-sm hover:shadow-lg transition-shadow duration-200"
+                      >
+                        <div className="ml-4 flex-1">
+                          <p className="text-lg font-semibold text-gray-800">
+                            Name: {bid.userName}{' '}
+                          </p>
+                          <p className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-1 rounded-lg">
+                            {bid.userEmail}
+                          </p>
+                          <p className="text-gray-600 mt-1">
+                            <span className="font-bold text-green-600">Bid:</span> {bid.bidAmount} PKR
+                          </p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-600 text-center">No bids available</p>
+                )}
+              </div>
             </div>
-          ))}
-        </div>
+          </div>
+
+        </Fragment>
       )}
       <UpdateBikeModal
         isOpen={isModalOpen}
