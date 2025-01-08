@@ -133,7 +133,7 @@ const Form = () => {
         <div className="text-center">
           <button
             type="submit"
-            className="px-6 py-3 bg-gray-100 md:text-xl font-myFont2 text-sky-500 rounded hover:bg-sky-500 hover:text-white transition duration-300"
+            className="px-6 py-3 bg-gray-100 md:text-xl font-Poppins text-sky-500 rounded hover:bg-sky-500 hover:text-white transition duration-300"
           >
             Send Message
           </button>
