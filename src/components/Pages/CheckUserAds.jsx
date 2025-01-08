@@ -120,7 +120,7 @@ const CheckUserAds = () => {
   const [selectedBike, setSelectedBike] = useState(null);
   const user = JSON.parse(localStorage.getItem("user"));
   const userName = user?.Name || "User";
-  const [bids, setBids] = useState([]);
+  const [bidsData, setBids] = useState([]);
 
   const getUserBikes = async () => {
     setLoading(true);
@@ -135,22 +135,22 @@ const CheckUserAds = () => {
     }
   };
 
-  const getBidsFunction = async (data) => {
-    const bikeIds = data.map((bike) => bike._id);
-
+  const getBidsFunction = async (bikes) => {
+    const bikeIds = bikes.map(bike => bike._id); // Extract all bike IDs into an array
     try {
-      const data = await axios.get(`${SDK.BASE_URL}/Bid/GetAllBikeBids?bike_id=${bikeIds}`);
-      setBids(data.data.bids || []);
-      if (response.data.bids) {
-        console.log('Bids for bikes:', response.data.data);
-      } else {
-        console.log('No bids found');
-      }
+      // Send the array of bike IDs to the backend
+      const response = await axios.get(`${SDK.BASE_URL}/Bid/GetAllBikesBids?bike_ids=${bikeIds.join(',')}`);
+      console.log('API Response for Bids:', response.data);  // Add this log to inspect the response
+  
+      // Now, we need to map the bids back to their respective bikes
+      const bikeBids = response.data.bids;
+
+      setBids(bikeBids); 
     } catch (error) {
       console.error('Error fetching bids:', error);
     }
   };
-
+  
   useEffect(() => {
     getUserBikes();
   }, []);
@@ -264,9 +264,9 @@ const CheckUserAds = () => {
             <div className="bg-white rounded-lg shadow-lg p-4">
               <h2 className="text-xl font-bold text-gray-800 mb-4">List of Bids</h2>
               <div className="h-[400px] overflow-y-auto">
-                {bids.length > 0 ? (
+                {bidsData.length > 0 ? (
                   <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {bids.map((bid, index) => (
+                    {bidsData.map((bid, index) => (
                       <li
                         key={index}
                         className="flex items-center bg-gray-100 rounded-lg p-4 shadow-sm hover:shadow-lg transition-shadow duration-200"
