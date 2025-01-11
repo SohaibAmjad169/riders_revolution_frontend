@@ -32,33 +32,45 @@ function Navbar() {
   const navItems = (
     <>
       <li>
-        <Link className="font-Popins font-extrabold hover:text-blue-500" to="/">
-          Home
+        <Link className="glowing-btn relative text-glow-color font-raleway text-xs font-extrabold tracking-widest cursor-pointer px-4 py-2 border-2 border-glow-color rounded-lg bg-transparent hover:text-black hover:bg-white transition-transform duration-300 shadow-glow-btn hover:shadow-glow-hover focus:shadow-glow-hover focus:text-black focus:bg-white" to="/">
+        <span className="glowing-txt relative inline-block text-center text-glow">
+        Home
+      </span>
         </Link>
       </li>
       <li>
-        <Link className="font-Popins font-extrabold hover:text-blue-500" to="/aboutUs">
-          About Us
+        <Link className="glowing-btn relative text-glow-color font-raleway text-xs font-extrabold tracking-widest cursor-pointer px-4 py-2 border-2 border-glow-color rounded-lg bg-transparent hover:text-black hover:bg-white transition-transform duration-300 shadow-glow-btn hover:shadow-glow-hover focus:shadow-glow-hover focus:text-black focus:bg-white" to="/aboutUs">
+        <span className="glowing-txt relative inline-block text-center text-glow">
+        About Us
+      </span>
         </Link>
       </li>
       <li>
-        <Link className="font-Popins font-extrabold hover:text-blue-500" to="/bike">
-          Marketplace
+        <Link className="glowing-btn relative text-glow-color font-raleway text-xs font-extrabold tracking-widest cursor-pointer px-4 py-2 border-2 border-glow-color rounded-lg bg-transparent hover:text-black hover:bg-white transition-transform duration-300 shadow-glow-btn hover:shadow-glow-hover focus:shadow-glow-hover focus:text-black focus:bg-white" to="/bike">
+        <span className="glowing-txt relative inline-block text-center text-glow">
+        Marketplace
+      </span>
         </Link>
       </li>
       <li>
-        <Link className="font-Popins font-extrabold hover:text-blue-500" to="/news">
-          Community News
+        <Link className="glowing-btn relative text-glow-color font-raleway text-xs font-extrabold tracking-widest cursor-pointer px-4 py-2 border-2 border-glow-color rounded-lg bg-transparent hover:text-black hover:bg-white transition-transform duration-300 shadow-glow-btn hover:shadow-glow-hover focus:shadow-glow-hover focus:text-black focus:bg-white" to="/news">
+        <span className="glowing-txt relative inline-block text-center text-glow">
+        Community News
+      </span>
         </Link>
       </li>
       <li>
-        <Link className="font-Popins font-extrabold hover:text-blue-500" to="/services">
-          Services
+        <Link className="glowing-btn relative text-glow-color font-raleway text-xs font-extrabold tracking-widest cursor-pointer px-4 py-2 border-2 border-glow-color rounded-lg bg-transparent hover:text-black hover:bg-white transition-transform duration-300 shadow-glow-btn hover:shadow-glow-hover focus:shadow-glow-hover focus:text-black focus:bg-white" to="/services">
+        <span className="glowing-txt relative inline-block text-center text-glow">
+        Services
+      </span>
         </Link>
       </li>
       <li>
-        <Link className="font-Popins font-extrabold hover:text-blue-500" to="/contactUs">
-          Contact Us
+        <Link className="glowing-btn relative text-glow-color font-raleway text-xs font-extrabold tracking-widest cursor-pointer px-4 py-2 border-2 border-glow-color rounded-lg bg-transparent hover:text-black hover:bg-white transition-transform duration-300 shadow-glow-btn hover:shadow-glow-hover focus:shadow-glow-hover focus:text-black focus:bg-white" to="/contactUs">
+        <span className="glowing-txt relative inline-block text-center text-glow">
+        Contact Us
+      </span>
         </Link>
       </li>
     </>
@@ -66,15 +78,13 @@ function Navbar() {
 
   return (
     <div
-      className={`container mx-auto px-4 md:px-20 fixed top-0 left-0 right-0 z-50 ${
-        sticky ? "bg-white shadow-md transition duration-300" : "bg-transparent"
-      }`}
+      className="bg-black container mx-auto px-4 md:px-20 fixed top-0 left-0 right-0 z-50 height-100px"
     >
       <div className="navbar flex items-center justify-between py-3">
         {/* Logo */}
         <div className="navbar-start flex items-center">
           <Link className="text-2xl font-bold" to="/">
-            <img src="./Logo-black.png" alt="Logo" width={50} />
+            <img src="./Logo.png" alt="Logo" width={50} />
           </Link>
           {/* Mobile Menu Button */}
           <button

@@ -20,7 +20,7 @@ function Banner() {
 
   return (
     <>
-      <div className="mt-20">
+      <div className="mt-16">
         <div
           className="relative flex font-Poppins items-center h-screen bg-cover bg-center"
           style={{ backgroundImage: `url(${banner})` }}
