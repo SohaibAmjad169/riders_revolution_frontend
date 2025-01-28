@@ -31,14 +31,15 @@ const BikeDetailsPage = () => {
       {Loading ? (
         <Spinner />
       ) : (
-        <div className="p-6 bg-gray-100 min-h-screen my-20">
+        <div className="p-6 bg-gray-100 min-h-screen my-20 mt-0">
           <BikeHeader
             flag={Bike.Used}
             _id={Bike._id}
             image={Bike.image}
             name={Bike.name}
             price={Bike.price}
-            rating={Bike.rating}
+            Engine={Bike.Engine}
+            PetrolCapacity={Bike.PetrolCapacity}
             bikeData={Bike} 
           />
           {/* Add additional details here */}

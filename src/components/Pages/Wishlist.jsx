@@ -114,10 +114,7 @@ const Wishlist = () => {
                 <strong className="text-gray-900">Bike Price:</strong>{" "}
                 {item.bikePrice}
               </p>
-              <p className="text-gray-700 text-lg font-normal mb-2">
-                <strong className="text-gray-900">Bike Rating:</strong>{" "}
-                {item.bikeRating}
-              </p>
+              
               <p className="text-gray-700 text-lg font-normal mb-2">
                 <strong className="text-gray-900">User Name:</strong>{" "}
                 {item.userName}

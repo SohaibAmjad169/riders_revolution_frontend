@@ -5,7 +5,7 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
-    extend: {},
+    
     fontFamily: {
       myFont: ['American Captain'],
       myFont2: ['Gidole Regular'],
@@ -15,3 +15,4 @@ export default {
   },
   plugins: [daisyui],
 }
+

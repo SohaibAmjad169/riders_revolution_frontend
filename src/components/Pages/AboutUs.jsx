@@ -7,7 +7,7 @@ const AboutUs = () => {
   return (
     <div>
       <section
-        className="h-auto md:h-screen bg-cover bg-center mt-20 flex items-center py-12"
+        className="h-auto md:h-screen bg-cover bg-center flex items-center py-12"
         style={{ backgroundImage: "url('./about banner-01.jpg')" }}
       >
         <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center justify-center px-6 md:px-12 gap-8">

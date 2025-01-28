@@ -9,7 +9,7 @@ import SDK from '../../config';
 import { toast } from 'react-hot-toast';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
 
-const BikeHeader = ({ image, name, price, rating, _id, flag, bikeData }) => {
+const BikeHeader = ({ image, name, price, Engine, PetrolCapacity, _id, flag, bikeData }) => {
   const User = useSelector((state) => state.Auth);
   const [quantity, setQuantity] = useState(1);
   const [bidAmount, setBidAmount] = useState('');
@@ -53,7 +53,7 @@ const BikeHeader = ({ image, name, price, rating, _id, flag, bikeData }) => {
     const minBid = bikePrice * 0.6;
 
     if (bidAmount < minBid) {
-      toast.error('Price is too low!');
+      toast.error('Price is too low! Minimum amount is '+ minBid + ' PKR');
       return;
     }
 
@@ -100,6 +100,7 @@ const BikeHeader = ({ image, name, price, rating, _id, flag, bikeData }) => {
         userEmail: User.user.Email,
         bikeImage: image,
         bikeName:bikeData.name,
+        bikeUsed:bikeData.Used,
         bikePrice:bikeData.price,
         bikeRating:bikeData.rating
       });
@@ -117,26 +118,43 @@ const BikeHeader = ({ image, name, price, rating, _id, flag, bikeData }) => {
 
 
   return (
-    <div className={`p-6 ${flag ? 'grid grid-cols-1 md:grid-cols-12 gap-6' : 'flex justify-center items-center'}`}>
-      <div className={flag ? 'col-span-12 md:col-span-8' : 'w-[800px] '}>
-        <div className="max-w-full bg-white rounded-lg shadow-lg overflow-hidden">
-          <img src={`${SDK.IMAGES_URL}/${image}`} alt={name} className="w-full h-64 object-contain" />
-          <div className="p-6">
-            <div className="flex justify-between items-center">
-              <h1 className="text-2xl font-bold">{name}</h1>
-              <div>
-                <p className="text-lg font-semibold text-green-600">{price} PKR</p>
-                <p className="text-sm text-gray-600">⭐⭐⭐⭐⭐ ({rating} Rating)</p>
-              </div>
+    <div>
+    <div className="p-6 flex justify-center items-center">
+      <div className="w-[800px]">
+      <div className="flex-1 space-y-4">
+          {/* Product Name */}
+          <h1 className="text-4xl font-bold text-blue-700">{name}</h1>
+          
+
+          <div className="flex-1 relative">
+          {/* Image */}
+          <div className="w-3/4 mx-auto">
+          <img
+              src={`${SDK.IMAGES_URL}/${image}`} alt={name}
+              className="w-full h-full object-cover"
+            />
             </div>
-            <div className="mt-4">
+            <div className="absolute top-4 right-8 bg-white px-4 py-2 text-blue-700 shadow-lg rounded-full">
+            Engine: {bikeData.engine}
+          </div>
+          <div className="absolute bottom-4 left-8 bg-white px-4 py-2 text-blue-700 shadow-lg rounded-full">
+          Petrol Capacity: {bikeData.petrolCapacity} liters
+          </div>
+            </div>
+
+
+        <div className="flex-1 space-y-4">
+
+        <div className="mt-4">
+        <h1 className="text-2xl font-bold text-blue-700">{price} PKR</h1>
               <div className="flex items-center space-x-4">
                 {User.user ? (
                   !flag ? (
                     <div className="flex items-center justify-between w-full">
                       <div className="flex items-center">
+                      
                         <button
-                          className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200"
+                          className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
                           onClick={AddToCart}
                         >
                           Add to Cart
@@ -155,13 +173,17 @@ const BikeHeader = ({ image, name, price, rating, _id, flag, bikeData }) => {
                           -
                         </button>
                       </div>
+                      
                       <div className="ml-auto flex items-center">
-                        <button onClick={toggleWishlist}>
+                        <button onClick={toggleWishlist} class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                           {isWishlisted ? (
                             <FaHeart className="text-red-500 text-2xl" />
                           ) : (
                             <FaRegHeart className="text-gray-500 text-2xl" />
                           )}
+                          Wishlist
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -175,43 +197,55 @@ const BikeHeader = ({ image, name, price, rating, _id, flag, bikeData }) => {
                         onChange={(e) => setBidAmount(e.target.value)}
                       />
                       <button
-                        className="bg-blue-500 text-white rounded-lg p-2"
+                        type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
                         onClick={createBid}
                       >
                         Place Bid
                       </button>
+                      
                       <div className="ml-auto flex items-center">
-                        <button onClick={toggleWishlist}>
-                          {isWishlisted ? (
+                        <button onClick={toggleWishlist} class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+<span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+{isWishlisted ? (
                             <FaHeart className="text-red-500 text-2xl" />
                           ) : (
                             <FaRegHeart className="text-gray-500 text-2xl" />
                           )}
+                          Wishlist
+</span>
+                          
                         </button>
                       </div>
+
                     </div>
                   )
                 ) : (
                   <AuthModal />
                 )}
               </div>
+              
             </div>
-          </div>
+
+            
+
+          
         </div>
+      </div>
       </div>
 
       {flag && (
-        <div className="col-span-12 md:col-span-4">
-          <div className="bg-white rounded-lg shadow-lg p-4">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">List of Bids</h2>
+        <div className="col-span-12 md:col-span-4 ml-4">
+          <div className="bg-blue-100 rounded-lg shadow-lg p-4">
+            <h2 className="text-4xl font-bold text-center mb-4 text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">List of Bids</h2>
             <div className="h-[400px] overflow-y-auto">
               {bids.length > 0 ? (
-                <ul className="space-y-4">
+                <ul class=" mt-8 mx-auto text-left font-medium text-lg leading-none border-blue-200">
                   {bids.map((bid, index) => (
                     <li
                       key={index}
-                      className="flex items-center bg-gray-100 rounded-lg p-4 shadow-sm hover:shadow-lg transition-shadow duration-200"
+                      class="p-3.5 w-full flex items-center text-blue-500 hover:text-blue-700 hover:bg-blue-50 border-2 border-blue-200"
                     >
+                      <span class="ml-5 mr-2.5 w-1 h-16 bg-blue-500 rounded-r-md"></span>
                       <img
                         src={`${SDK.IMAGES_URL}/${image}`}
                         alt="Bike"
@@ -221,7 +255,7 @@ const BikeHeader = ({ image, name, price, rating, _id, flag, bikeData }) => {
                         <p className="text-lg font-semibold text-gray-800">
                           Name : {bid.userName}{' '}
                         </p>
-                        <p className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-1 rounded-lg">
+                        <p className="bg-white w-48 text-blue-600 text-xs font-medium px-2 py-1 rounded-lg">
                           {bid.userEmail}
                         </p>
                         <p className="text-gray-600 mt-1">
@@ -237,7 +271,15 @@ const BikeHeader = ({ image, name, price, rating, _id, flag, bikeData }) => {
             </div>
           </div>
         </div>
+        
+        
       )}
+      </div>
+
+      
+
+      
+    
     </div>
   );
 };

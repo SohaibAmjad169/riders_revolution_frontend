@@ -2,21 +2,20 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import SDK from '../../config';
-import { toast, Toaster  } from 'react-hot-toast'; 
+import SDK from "../../config";
+import { toast, Toaster } from "react-hot-toast";
 
 const UserSellBike = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userName = user?.Name || "User";
 
   const [questions, setQuestions] = useState([{ question: "", answer: "" }]);
-  const [imagePreview, setImagePreview] = useState(null); 
+  const [imagePreview, setImagePreview] = useState(null);
 
   const formik = useFormik({
     initialValues: {
       bikeName: "",
       price: "",
-      rating: "",
       engine: "",
       condition: "",
       image: null,
@@ -26,10 +25,6 @@ const UserSellBike = () => {
       price: Yup.number()
         .typeError("Price must be a number")
         .required("Price is required"),
-      rating: Yup.number()
-        .min(1, "Rating must be between 1 and 5")
-        .max(5, "Rating must be between 1 and 5")
-        .required("Rating is required"),
       engine: Yup.string().required("Engine is required"),
       condition: Yup.string().required("Condition is required"),
       image: Yup.mixed().required("Image is required").nullable(),
@@ -39,9 +34,9 @@ const UserSellBike = () => {
         const bikeData = {
           name: values.bikeName,
           price: values.price,
-          rating: values.rating,
           engine: values.engine,
           condition: values.condition,
+          rating: 3,
           userName,
           questions,
           petrolCapacity: 13,
@@ -74,7 +69,6 @@ const UserSellBike = () => {
 
         formik.resetForm();
         setImagePreview(null);
-
       } catch (error) {
         console.error("Error submitting bike:", error);
         toast.error("Failed to submit bike. Please try again.");
@@ -102,11 +96,9 @@ const UserSellBike = () => {
 
   return (
     <>
-      <Toaster  />
+      <Toaster />
       <div className="max-w-4xl mx-auto mt-24 p-6 bg-white shadow-lg rounded-lg font-sans">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-          Sell Your Bike
-        </h1>
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Sell Your Bike</h1>
         <form onSubmit={formik.handleSubmit}>
           {/* Bike Name */}
           <div className="mb-4">
@@ -115,18 +107,17 @@ const UserSellBike = () => {
               type="text"
               name="bikeName"
               placeholder="Enter bike name"
-              className={`w-full px-4 py-2 border ${formik.errors.bikeName && formik.touched.bikeName
+              className={`w-full px-4 py-2 border ${
+                formik.errors.bikeName && formik.touched.bikeName
                   ? "border-red-500"
                   : "border-gray-300"
-                } rounded-md text-gray-800`}
+              } rounded-md text-gray-800`}
               value={formik.values.bikeName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
             {formik.errors.bikeName && formik.touched.bikeName && (
-              <p className="text-red-500 text-sm mt-1">
-                {formik.errors.bikeName}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{formik.errors.bikeName}</p>
             )}
           </div>
 
@@ -137,38 +128,17 @@ const UserSellBike = () => {
               type="number"
               name="price"
               placeholder="Enter price"
-              className={`w-full px-4 py-2 border ${formik.errors.price && formik.touched.price
+              className={`w-full px-4 py-2 border ${
+                formik.errors.price && formik.touched.price
                   ? "border-red-500"
                   : "border-gray-300"
-                } rounded-md text-gray-800`}
+              } rounded-md text-gray-800`}
               value={formik.values.price}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
             {formik.errors.price && formik.touched.price && (
               <p className="text-red-500 text-sm mt-1">{formik.errors.price}</p>
-            )}
-          </div>
-
-          {/* Rating */}
-          <div className="mb-4">
-            <label className="block text-gray-700 font-medium">Rating</label>
-            <input
-              type="number"
-              name="rating"
-              min="1"
-              max="5"
-              placeholder="Enter rating (1-5)"
-              className={`w-full px-4 py-2 border ${formik.errors.rating && formik.touched.rating
-                  ? "border-red-500"
-                  : "border-gray-300"
-                } rounded-md text-gray-800`}
-              value={formik.values.rating}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.errors.rating && formik.touched.rating && (
-              <p className="text-red-500 text-sm mt-1">{formik.errors.rating}</p>
             )}
           </div>
 
@@ -179,10 +149,11 @@ const UserSellBike = () => {
               type="text"
               name="engine"
               placeholder="Enter engine type"
-              className={`w-full px-4 py-2 border ${formik.errors.engine && formik.touched.engine
+              className={`w-full px-4 py-2 border ${
+                formik.errors.engine && formik.touched.engine
                   ? "border-red-500"
                   : "border-gray-300"
-                } rounded-md text-gray-800`}
+              } rounded-md text-gray-800`}
               value={formik.values.engine}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -197,10 +168,11 @@ const UserSellBike = () => {
             <label className="block text-gray-700 font-medium">Condition</label>
             <select
               name="condition"
-              className={`w-full px-4 py-2 border ${formik.errors.condition && formik.touched.condition
+              className={`w-full px-4 py-2 border ${
+                formik.errors.condition && formik.touched.condition
                   ? "border-red-500"
                   : "border-gray-300"
-                } rounded-md text-gray-800`}
+              } rounded-md text-gray-800`}
               value={formik.values.condition}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -210,9 +182,7 @@ const UserSellBike = () => {
               <option value="Old">Old</option>
             </select>
             {formik.errors.condition && formik.touched.condition && (
-              <p className="text-red-500 text-sm mt-1">
-                {formik.errors.condition}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{formik.errors.condition}</p>
             )}
           </div>
 
@@ -235,9 +205,7 @@ const UserSellBike = () => {
 
           {/* Questions Section */}
           <div className="mb-6">
-            <label className="block text-gray-700 font-medium">
-              Questions & Answers
-            </label>
+            <label className="block text-gray-700 font-medium">Questions & Answers</label>
             {questions.map((q, index) => (
               <div key={index} className="mb-4 flex gap-4">
                 <input
@@ -245,18 +213,14 @@ const UserSellBike = () => {
                   placeholder="Question"
                   className="w-1/2 px-4 py-2 border border-gray-300 rounded-md"
                   value={q.question}
-                  onChange={(e) =>
-                    handleQuestionChange(index, "question", e.target.value)
-                  }
+                  onChange={(e) => handleQuestionChange(index, "question", e.target.value)}
                 />
                 <input
                   type="text"
                   placeholder="Answer"
                   className="w-1/2 px-4 py-2 border border-gray-300 rounded-md"
                   value={q.answer}
-                  onChange={(e) =>
-                    handleQuestionChange(index, "answer", e.target.value)
-                  }
+                  onChange={(e) => handleQuestionChange(index, "answer", e.target.value)}
                 />
               </div>
             ))}

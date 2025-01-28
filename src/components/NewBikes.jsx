@@ -50,13 +50,14 @@ function NewBikes() {
   }
 
   return (
+
     <div className="max-w-screen-2xl mx-auto px-4 md:px-16">
       <div className="text-center my-16">
-        <h2 className="text-4xl font-extrabold font-Popins text-gray-900">
-          Trending{' '}
-          <span className="relative inline-block font-Popins text-blue-500">
+        <h2 className="text-4xl font-Poppins font-bold text-grey-900 my-16 text-center">
+          Trending 
+          <span className="relative font-Poppins inline-block ml-2">
             Today
-            <span className="absolute bottom-0 left-0 w-full h-1 bg-blue-400 -z-10"></span>
+            <span className="absolute bottom-0 left-0 w-full h-2 bg-blue-400 -z-10"></span>
           </span>
         </h2>
         <p className="text-lg text-gray-600 mt-4">
@@ -65,36 +66,46 @@ function NewBikes() {
       </div>
 
       <Slider {...settings} className="mx-2">
-        {AllBikes.map((bike) => (
-          <div key={bike._id} className="p-4">
-            <div
-              onClick={() => navigate(`/bike/${bike._id}`)}
-              className="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
-            >
-              <img
-              src={`${SDK.IMAGES_URL}/${bike.image}`}
-                alt={bike.name}
-                className="w-full h-56 object-contain rounded-md mb-4"
-              />
-              <h3 className="text-xl font-semibold text-gray-800">
-                {bike.name}
-              </h3>
-              <div className="text-yellow-400 my-2">
-                {'★'.repeat(Math.floor(bike.rating)) +
-                  '☆'.repeat(5 - Math.floor(bike.rating))}
-              </div>
-              <p className="text-lg font-medium text-gray-800">
-                Rs {bike.price.toLocaleString()}
-              </p>
-              <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
-                Check Out
-              </button>
-            </div>
-          </div>
-        ))}
-      </Slider>
+      {AllBikes.map((bike) => (
+    <div
+      key={bike.id}
+      onClick={() => navigate(`/bike/${bike._id}`)}
+      className="p-4 bg-white scale-90 shadow-lg rounded-xl overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer hover:shadow-2xl"
+    >
+      <div className="relative">
+        <img
+          src={`${SDK.IMAGES_URL}/${bike.image}`}
+          alt={bike.name}
+          className="w-full h-48 object-cover rounded-t-xl"
+        />
+        <span className="absolute top-2 right-2 bg-yellow-500 text-white text-xs font-bold py-1 px-2 rounded-full">
+          {bike.Used ? 'Used' : 'New'}
+        </span>
+      </div>
+
+      <div className="p-4">
+        <h3 className="text-lg font-bold text-gray-800 mb-2">{bike.name}</h3>
+
+        <div className="text-yellow-500 mb-2">
+          {bike.starting}
+        </div>
+
+        <p className="text-lg font-semibold text-gray-700 mb-2">
+          Rs {bike.price.toLocaleString()}
+        </p>
+
+        <button
+          className="w-full py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-colors"
+        >
+          View Details
+        </button>
+      </div>
+    </div>
+  ))}
+</Slider>
     </div>
   )
 }
 
 export default NewBikes
+
