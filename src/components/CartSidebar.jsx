@@ -41,7 +41,11 @@ const CartSidebar = () => {
       {/* Button to open the sidebar */}
       <button
         onClick={() => setIsOpen(true)}
+<<<<<<< HEAD
         className=" bg-white text-black p-3 rounded-full z-50 "
+=======
+        className="fixed top-4 right-10 bg-white text-black p-3 rounded-full z-50 mx-3"
+>>>>>>> e2b2b495d8ab9b9551617dbb55f76932303b0a0b
       >
         🛒({cartData?.totalProducts || 0})
       </button>

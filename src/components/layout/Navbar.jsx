@@ -29,9 +29,59 @@ function Navbar() {
     };
   }, []);
 
+<<<<<<< HEAD
+=======
+  const navItems = (
+    <>
+      <li>
+        <Link className="glowing-btn relative text-glow-color font-raleway text-xs font-extrabold tracking-widest cursor-pointer px-4 py-2 border-2 border-glow-color rounded-lg bg-transparent hover:text-black hover:bg-white transition-transform duration-300 shadow-glow-btn hover:shadow-glow-hover focus:shadow-glow-hover focus:text-black focus:bg-white" to="/">
+        <span className="glowing-txt relative inline-block text-center text-glow">
+        Home
+      </span>
+        </Link>
+      </li>
+      <li>
+        <Link className="glowing-btn relative text-glow-color font-raleway text-xs font-extrabold tracking-widest cursor-pointer px-4 py-2 border-2 border-glow-color rounded-lg bg-transparent hover:text-black hover:bg-white transition-transform duration-300 shadow-glow-btn hover:shadow-glow-hover focus:shadow-glow-hover focus:text-black focus:bg-white" to="/aboutUs">
+        <span className="glowing-txt relative inline-block text-center text-glow">
+        About Us
+      </span>
+        </Link>
+      </li>
+      <li>
+        <Link className="glowing-btn relative text-glow-color font-raleway text-xs font-extrabold tracking-widest cursor-pointer px-4 py-2 border-2 border-glow-color rounded-lg bg-transparent hover:text-black hover:bg-white transition-transform duration-300 shadow-glow-btn hover:shadow-glow-hover focus:shadow-glow-hover focus:text-black focus:bg-white" to="/bike">
+        <span className="glowing-txt relative inline-block text-center text-glow">
+        Marketplace
+      </span>
+        </Link>
+      </li>
+      <li>
+        <Link className="glowing-btn relative text-glow-color font-raleway text-xs font-extrabold tracking-widest cursor-pointer px-4 py-2 border-2 border-glow-color rounded-lg bg-transparent hover:text-black hover:bg-white transition-transform duration-300 shadow-glow-btn hover:shadow-glow-hover focus:shadow-glow-hover focus:text-black focus:bg-white" to="/news">
+        <span className="glowing-txt relative inline-block text-center text-glow">
+        Community News
+      </span>
+        </Link>
+      </li>
+      <li>
+        <Link className="glowing-btn relative text-glow-color font-raleway text-xs font-extrabold tracking-widest cursor-pointer px-4 py-2 border-2 border-glow-color rounded-lg bg-transparent hover:text-black hover:bg-white transition-transform duration-300 shadow-glow-btn hover:shadow-glow-hover focus:shadow-glow-hover focus:text-black focus:bg-white" to="/services">
+        <span className="glowing-txt relative inline-block text-center text-glow">
+        Services
+      </span>
+        </Link>
+      </li>
+      <li>
+        <Link className="glowing-btn relative text-glow-color font-raleway text-xs font-extrabold tracking-widest cursor-pointer px-4 py-2 border-2 border-glow-color rounded-lg bg-transparent hover:text-black hover:bg-white transition-transform duration-300 shadow-glow-btn hover:shadow-glow-hover focus:shadow-glow-hover focus:text-black focus:bg-white" to="/contactUs">
+        <span className="glowing-txt relative inline-block text-center text-glow">
+        Contact Us
+      </span>
+        </Link>
+      </li>
+    </>
+  );
+>>>>>>> e2b2b495d8ab9b9551617dbb55f76932303b0a0b
 
   
   return (
+<<<<<<< HEAD
     <div className={`navbar w-[100%] ${sticky ? "fixed top-0 shadow-md" : "relative"} bg-black z-[500] px-4 sm:px-6 lg:px-8 flex items-center h-24 text-navy font-medium text-sm`}>
 
       <div className="container mx-auto flex items-center justify-between">
@@ -41,6 +91,17 @@ function Navbar() {
     <img src="./Logo.png" alt="Logo" href="/" />
     
   </nav>
+=======
+    <div
+      className="bg-black container mx-auto px-4 md:px-20 fixed top-0 left-0 right-0 z-50 height-100px"
+    >
+      <div className="navbar flex items-center justify-between py-3">
+        {/* Logo */}
+        <div className="navbar-start flex items-center">
+          <Link className="text-2xl font-bold" to="/">
+            <img src="./Logo.png" alt="Logo" width={50} />
+          </Link>
+>>>>>>> e2b2b495d8ab9b9551617dbb55f76932303b0a0b
           {/* Mobile Menu Button */}
           <button
           className="xl:hidden flex items-center text-white focus:outline-none"
