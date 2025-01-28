@@ -9,11 +9,7 @@ import SDK from '../../config';
 import { toast } from 'react-hot-toast';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
 
-<<<<<<< HEAD
 const BikeHeader = ({ image, name, price, Engine, PetrolCapacity, _id, flag, bikeData }) => {
-=======
-const BikeHeader = ({ image, name, price, used, rating, _id, flag, bikeData }) => {
->>>>>>> e2b2b495d8ab9b9551617dbb55f76932303b0a0b
   const User = useSelector((state) => state.Auth);
   const [quantity, setQuantity] = useState(1);
   const [bidAmount, setBidAmount] = useState('');
@@ -122,7 +118,6 @@ const BikeHeader = ({ image, name, price, used, rating, _id, flag, bikeData }) =
 
 
   return (
-<<<<<<< HEAD
     <div>
     <div className="p-6 flex justify-center items-center">
       <div className="w-[800px]">
@@ -138,19 +133,6 @@ const BikeHeader = ({ image, name, price, used, rating, _id, flag, bikeData }) =
               src={`${SDK.IMAGES_URL}/${image}`} alt={name}
               className="w-full h-full object-cover"
             />
-=======
-    <div className={`p-6 ${flag ? 'grid grid-cols-1 md:grid-cols-12 gap-6' : 'flex justify-center items-center'}`}>
-      <div className={flag ? 'col-span-12 md:col-span-8' : 'w-[800px] '}>
-        <div className="max-w-full bg-white rounded-lg shadow-lg overflow-hidden">
-          <img src={`${SDK.IMAGES_URL}/${image}`} alt={name} className="w-full h-64 object-contain" />
-          <div className="p-6">
-            <div className="flex justify-between items-center">
-              <h1 className="text-2xl font-bold">{name}</h1>
-              <div>
-                <p className="text-lg font-semibold text-green-600">{price} PKR</p>
-                
-              </div>
->>>>>>> e2b2b495d8ab9b9551617dbb55f76932303b0a0b
             </div>
             <div className="absolute top-4 right-8 bg-white px-4 py-2 text-blue-700 shadow-lg rounded-full">
             Engine: {bikeData.engine}
@@ -252,7 +234,6 @@ const BikeHeader = ({ image, name, price, used, rating, _id, flag, bikeData }) =
       </div>
 
       {flag && (
-<<<<<<< HEAD
         <div className="col-span-12 md:col-span-4 ml-4">
           <div className="bg-blue-100 rounded-lg shadow-lg p-4">
             <h2 className="text-4xl font-bold text-center mb-4 text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">List of Bids</h2>
@@ -263,18 +244,6 @@ const BikeHeader = ({ image, name, price, used, rating, _id, flag, bikeData }) =
                     <li
                       key={index}
                       class="p-3.5 w-full flex items-center text-blue-500 hover:text-blue-700 hover:bg-blue-50 border-2 border-blue-200"
-=======
-        <div className="col-span-12 md:col-span-4">
-          <div className="bg-blue-100 rounded-lg shadow-lg p-4">
-            <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">List of Bids</h2>
-            <div className="h-[400px] overflow-y-auto">
-              {bids.length > 0 ? (
-                <ul class="mt-8 mx-auto max-w-xs text-left font-medium text-lg leading-none border-blue-200 divide-y divide-blue-200">
-                  {bids.map((bid, index) => (
-                    <li
-                      key={index}
-                      class="py-3.5 w-full flex items-center text-blue-500 hover:text-blue-700 hover:bg-blue-50"
->>>>>>> e2b2b495d8ab9b9551617dbb55f76932303b0a0b
                     >
                       <span class="ml-5 mr-2.5 w-1 h-16 bg-blue-500 rounded-r-md"></span>
                       <img
@@ -286,11 +255,7 @@ const BikeHeader = ({ image, name, price, used, rating, _id, flag, bikeData }) =
                         <p className="text-lg font-semibold text-gray-800">
                           Name : {bid.userName}{' '}
                         </p>
-<<<<<<< HEAD
                         <p className="bg-white w-48 text-blue-600 text-xs font-medium px-2 py-1 rounded-lg">
-=======
-                        <p className="bg-white text-blue-600 text-xs font-medium px-2 py-1 rounded-lg">
->>>>>>> e2b2b495d8ab9b9551617dbb55f76932303b0a0b
                           {bid.userEmail}
                         </p>
                         <p className="text-gray-600 mt-1">
@@ -309,16 +274,12 @@ const BikeHeader = ({ image, name, price, used, rating, _id, flag, bikeData }) =
         
         
       )}
-<<<<<<< HEAD
       </div>
 
       
 
       
     
-=======
-      
->>>>>>> e2b2b495d8ab9b9551617dbb55f76932303b0a0b
     </div>
   );
 };
